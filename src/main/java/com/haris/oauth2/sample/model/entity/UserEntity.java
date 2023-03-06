@@ -13,10 +13,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Data
 @Builder(setterPrefix = "with")
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserEntity {
 
     @Id
@@ -26,5 +29,5 @@ public class UserEntity {
 
     private String password;
 
-    private Collection<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+    private String[] grantedAuthorities;
 }

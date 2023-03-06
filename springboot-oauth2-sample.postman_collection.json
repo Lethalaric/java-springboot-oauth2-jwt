@@ -1,0 +1,476 @@
+{
+	"info": {
+		"_postman_id": "92574219-3618-4588-84d8-1898e6d443df",
+		"name": "springboot-oauth2-sample",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12034906"
+	},
+	"item": [
+		{
+			"name": "public-apis",
+			"item": [
+				{
+					"name": "hello world",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/public/hello",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"public",
+								"hello"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "oauth2-token-login",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "secret",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "your-id",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "user-admin",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/oauth/token",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "sign-up",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer aaa",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"user\",\r\n    \"password\": \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/sign-up",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sign-up"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "sign-up-admin",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer aaa",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"user-admin\",\r\n    \"password\": \"password\",\r\n    \"roles\": [\"ROLE_ADMIN\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/sign-up",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sign-up"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user-apis",
+			"item": [
+				{
+					"name": "user-info",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiYXBpIl0sInVzZXJfbmFtZSI6ImhhcmlzIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl0sImV4cCI6MTY3ODA3MDc2MywiYXV0aG9yaXRpZXMiOlsiUk9MRV9VU0VSIl0sImp0aSI6ImM3MWMyOTk5LTdiODAtNDFiYy1hMzliLTg5MjI0MmU4NzFmOCIsImNsaWVudF9pZCI6InlvdXItaWQifQ.mH186mqI9Vd6FNh1S8AxnmzImiCxuUAKd3_7RhJG6fU",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/api/user/user-info",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"user",
+								"user-info"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "change-password",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiYXBpIl0sInVzZXJfbmFtZSI6ImhhcmlzIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl0sImV4cCI6MTY3ODA3MDc2MywiYXV0aG9yaXRpZXMiOlsiUk9MRV9VU0VSIl0sImp0aSI6ImM3MWMyOTk5LTdiODAtNDFiYy1hMzliLTg5MjI0MmU4NzFmOCIsImNsaWVudF9pZCI6InlvdXItaWQifQ.mH186mqI9Vd6FNh1S8AxnmzImiCxuUAKd3_7RhJG6fU",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\": \"password2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/user/change-password",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"user",
+								"change-password"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "admin-apis",
+			"item": [
+				{
+					"name": "user-info",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiYXBpIl0sInVzZXJfbmFtZSI6ImhhcmlzMiIsInNjb3BlIjpbInJlYWQiLCJ3cml0ZSJdLCJleHAiOjE2NzgwNzEyODQsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXSwianRpIjoiZjFhNmUwNTctYTU1NS00ZTMyLThmZGEtYTVkNDdiZWFhYjliIiwiY2xpZW50X2lkIjoieW91ci1pZCJ9.ExAOCueaHLiYo_qFHxF5rV7MyFHOlIRZTrSlAZGl2b0",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/api/admin/user-info",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"admin",
+								"user-info"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get user",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiYXBpIl0sInVzZXJfbmFtZSI6ImhhcmlzMiIsInNjb3BlIjpbInJlYWQiLCJ3cml0ZSJdLCJleHAiOjE2NzgwODEyNTEsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXSwianRpIjoiZjRiNWViMmMtZTk2MS00NDE0LWI2MTYtNGY5NDU2OWMyMTE5IiwiY2xpZW50X2lkIjoieW91ci1pZCJ9.KnaqitzOfB9h2EBMg3DtI5BXmwMs7N-dpOPTdNQjtN8",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/api/admin/get-user/user-admin",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"admin",
+								"get-user",
+								"user-admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "change user password",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiYXBpIl0sInVzZXJfbmFtZSI6ImhhcmlzMiIsInNjb3BlIjpbInJlYWQiLCJ3cml0ZSJdLCJleHAiOjE2NzgwODEyNTEsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXSwianRpIjoiZjRiNWViMmMtZTk2MS00NDE0LWI2MTYtNGY5NDU2OWMyMTE5IiwiY2xpZW50X2lkIjoieW91ci1pZCJ9.KnaqitzOfB9h2EBMg3DtI5BXmwMs7N-dpOPTdNQjtN8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"user\",\r\n    \"password\": \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/admin/change-password",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"admin",
+								"change-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add user role",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiYXBpIl0sInVzZXJfbmFtZSI6ImhhcmlzMiIsInNjb3BlIjpbInJlYWQiLCJ3cml0ZSJdLCJleHAiOjE2NzgwODEyNTEsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXSwianRpIjoiZjRiNWViMmMtZTk2MS00NDE0LWI2MTYtNGY5NDU2OWMyMTE5IiwiY2xpZW50X2lkIjoieW91ci1pZCJ9.KnaqitzOfB9h2EBMg3DtI5BXmwMs7N-dpOPTdNQjtN8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"user\",\r\n    \"role\": \"ROLE_ADMIN\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/admin/add-role",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"admin",
+								"add-role"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "remove user role",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiYXBpIl0sInVzZXJfbmFtZSI6ImhhcmlzMiIsInNjb3BlIjpbInJlYWQiLCJ3cml0ZSJdLCJleHAiOjE2NzgwODA3MTIsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXSwianRpIjoiYzc4N2U4NWYtYjY1Zi00ZDE5LWIyNTQtZjU4YzBjMDAzM2QzIiwiY2xpZW50X2lkIjoieW91ci1pZCJ9.uC48-EGNdRs2XBRDw_JXzwnyxHhezLjhmMKiFrKSMYw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"user\",\r\n    \"role\": \"ROLE_ADMIN\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/admin/remove-role",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"admin",
+								"remove-role"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "change-username",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiYXBpIl0sInVzZXJfbmFtZSI6ImhhcmlzMiIsInNjb3BlIjpbInJlYWQiLCJ3cml0ZSJdLCJleHAiOjE2NzgwODA3MTIsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXSwianRpIjoiYzc4N2U4NWYtYjY1Zi00ZDE5LWIyNTQtZjU4YzBjMDAzM2QzIiwiY2xpZW50X2lkIjoieW91ci1pZCJ9.uC48-EGNdRs2XBRDw_JXzwnyxHhezLjhmMKiFrKSMYw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"user\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/admin/change-username/haris",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"admin",
+								"change-username",
+								"haris"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "check-user-exists",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiYXBpIl0sInVzZXJfbmFtZSI6ImhhcmlzMiIsInNjb3BlIjpbInJlYWQiLCJ3cml0ZSJdLCJleHAiOjE2NzgwODA3MTIsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXSwianRpIjoiYzc4N2U4NWYtYjY1Zi00ZDE5LWIyNTQtZjU4YzBjMDAzM2QzIiwiY2xpZW50X2lkIjoieW91ci1pZCJ9.uC48-EGNdRs2XBRDw_JXzwnyxHhezLjhmMKiFrKSMYw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/api/admin/check-user-exists/users",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"admin",
+								"check-user-exists",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete user",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiYXBpIl0sInVzZXJfbmFtZSI6ImhhcmlzMiIsInNjb3BlIjpbInJlYWQiLCJ3cml0ZSJdLCJleHAiOjE2NzgwODEyNTEsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXSwianRpIjoiZjRiNWViMmMtZTk2MS00NDE0LWI2MTYtNGY5NDU2OWMyMTE5IiwiY2xpZW50X2lkIjoieW91ci1pZCJ9.KnaqitzOfB9h2EBMg3DtI5BXmwMs7N-dpOPTdNQjtN8",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/api/admin/delete-user/users",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"admin",
+								"delete-user",
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

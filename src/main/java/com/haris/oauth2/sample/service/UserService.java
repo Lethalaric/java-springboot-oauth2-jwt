@@ -1,42 +1,76 @@
 package com.haris.oauth2.sample.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.haris.oauth2.sample.model.dto.CustomUser;
 import com.haris.oauth2.sample.model.dto.UserRequest;
-import com.haris.oauth2.sample.model.entity.UserEntity;
-import com.haris.oauth2.sample.model.enums.Role;
-import com.haris.oauth2.sample.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import com.haris.oauth2.sample.model.dto.UserResponse;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.jwt.JwtHelper;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
 
 @Service
-@RequiredArgsConstructor
+@Slf4j
 public class UserService {
-    private UserRepository userRepository;
-    Object[] roles = Arrays.stream(Role.values()).toArray();
+
+    @Autowired
+    private CustomUserDetailsService customUserDetailsService;
+
+    @Value("${oauth2.secret}")
+    private String secret;
 
     public void insertUser(UserRequest userRequest) throws Exception {
-        if (!new HashSet<>(userRequest.getRoles()).containsAll(List.of(roles))) {
-            throw new Exception("Roles are not recognized.");
-        }
+        customUserDetailsService.insertUser(userRequest);
+    }
+    public UserResponse getUserEntityByUsername(String username) {
+        CustomUser customUser = customUserDetailsService.loadUserByUsername(username);
 
-        Collection<GrantedAuthority> authorities = userRequest.getRoles().stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
-        UserEntity userEntity = UserEntity.builder()
-                .withUsername(userRequest.getUsername())
-                .withPassword(userRequest.getPassword())
-                .withGrantedAuthorities(authorities)
-                .build();
-
-        userRepository.save(userEntity);
+        return UserResponse.from(customUser);
     }
 
-    public UserEntity getUserEntityByUsername(String username) throws Exception {
-        return userRepository.findByUsername(username).orElseThrow(() -> new Exception("User not found"));
+    private String getUsernameFromAuthorization(String authorizationToken) throws Exception {
+        if (!authorizationToken.toLowerCase().startsWith("bearer")) {
+            throw new Exception("Authorization prefix does not provide 'Bearer'");
+        }
+
+        String token = authorizationToken.substring("Bearer ".length());
+        String claims = JwtHelper.decode(token).getClaims();
+        ObjectMapper objectMapper = new ObjectMapper();
+        Map jsonString = objectMapper.readValue(claims, Map.class);
+
+        return jsonString.get("user_name").toString();
+    }
+
+    public UserResponse getUserFromAuthorization(String authorizationToken) throws Exception {
+        String username = getUsernameFromAuthorization(authorizationToken);
+
+        return getUserEntityByUsername(username);
+    }
+
+    public void changePassword(String username, String newPassword) throws Exception {
+        customUserDetailsService.changePassword(username, newPassword);
+    }
+
+    public void changeUsername(String username, String newUsername) throws Exception {
+        customUserDetailsService.changeUsername(username, newUsername);
+    }
+
+    public void addRole(String username, String role) throws Exception {
+        customUserDetailsService.addRole(username, role);
+    }
+
+    public void removeRole(String username, String role) throws Exception {
+        customUserDetailsService.removeRole(username, role);
+    }
+
+    public void deleteUser(String username) throws Exception {
+        customUserDetailsService.deleteUser(username);
+    }
+
+    public boolean checkIfUserExists(String username) {
+        return customUserDetailsService.checkIfUsernameExists(username);
     }
 }

@@ -5,6 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
+import java.util.stream.Collectors;
 
 @Data
 @AllArgsConstructor
@@ -13,13 +17,14 @@ import lombok.NoArgsConstructor;
 public class UserResponse {
 
     private String username;
-    private String password;
+    private String[] roles;
 
-    public static UserResponse from(UserEntity userEntity) {
+    public static UserResponse from(CustomUser customUser) {
+        String[] roles = customUser.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()).toArray(new String[0]);
         return UserResponse
                 .builder()
-                .withUsername(userEntity.getUsername())
-                .withPassword(userEntity.getPassword())
+                .withUsername(customUser.getUsername())
+                .withRoles(roles)
                 .build();
     }
 }
